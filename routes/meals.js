@@ -7,6 +7,9 @@ router.get("/search", isLoggedIn, (req,res)=>{
 	res.render('search');
 });
 
+router.get("/about",function(req,res){
+	res.render('about');
+});
 router.get("/viewall", isLoggedIn, getviewPage);
 
 router.post("/recipes-pagination", isLoggedIn, viewAllRecipes);

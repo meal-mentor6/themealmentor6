@@ -9,7 +9,7 @@ const passport = require('passport');
 const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const flash = require("connect-flash");
-// const sassMiddleware=require('node-sass-middleware');
+const sassMiddleware=require('node-sass-middleware');
 
 require('./config/passport');
 
@@ -26,13 +26,13 @@ app.use(cookieSession({
 app.use(cookieParser());
 app.use(flash());
 
-// app.use(sassMiddleware({
-//     src: path.join(__dirname,'public','sass'),
-//     dest: path.join(__dirname,'public', 'css'),
-//     debug: true,
-//     outputStyle: 'extended',
-//     prefix: '/css'
-// }));
+app.use(sassMiddleware({
+    src: path.join(__dirname,'public','sass'),
+    dest: path.join(__dirname,'public', 'css'),
+    debug: true,
+    outputStyle: 'extended',
+    prefix: '/css'
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
