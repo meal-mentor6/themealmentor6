@@ -16,8 +16,11 @@
 				<h5 style="font-weight: bold; color: #feb538; text-shadow: 0 2px 5px rgba(0,0,0,0.36);">Quick Links</h5>
 				<ul>
 					<li><a class="grey-text text-lighten-3" href="/search">Search</a></li>
-					<li><a class="grey-text text-lighten-3" href="/user/me"><%=currUser.fullName%></a></li>
-					<li><a class="grey-text text-lighten-3" href="/Logout"> Logout </a></li>
+					<li><a class="grey-text text-lighten-3" href="/about">About</a></li>
+					<li><a class="grey-text text-lighten-3" href="<%if(currUser){%>/logout<%} else{%>/signin<%}%>"> <%if(currUser){%> Logout <%} else{%> Login <%}%> </a></li>
+					<%if(currUser){%>
+						<li><a class="grey-text text-lighten-3" href="/user/me"><%=currUser.name%></a></li>
+					<%}%>
 				</ul>
 			</div>
 			<div class="col l3 offset-l1 s12 center">

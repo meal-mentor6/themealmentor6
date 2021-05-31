@@ -1,90 +1,180 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" href="/css/about.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-  </head>
-  <body>
+<%- include('./partials/head')%>
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Catamaran:wght@700&family=Grand+Hotel&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<link rel="stylesheet" href="/css/about.css" />
+	</head>
+	<body>
+		<header class="header">
+			<div id="straw"> 
+              <img src="/images/extra/strawberry.webp" alt="">
+        	</div>
+      
+			<div id="leaf">
+				<img src="/images/extra/leaf.webp" alt="">
+			</div>
+			
+			<div class="banner">
+				<h3 class="banner-subtitle">Enjoy the taste of Eating Healthy</h3>
+				<h1 class="banner-title">The Meal Mentor</h1>
+				<a href="/" class="banner-btn">Explore</a>
+			</div>
+		</header>
+		
+		<div class="content-divider"></div>
+		
+	<!-- Services -->
+		<section class="skills clearfix">
+			<article class="skill">
+				<span class="skill-icon">
+					<i class="fas fa-glass-cheers"></i>
+				</span>
+				<h3 class="skill-title">Taste</h3>
+				<p class="skill-text">
+					Where taste elevates your mood unconditionally
+				</p>
+			</article>
+			<article class="skill">
+				<span class="skill-icon">
+					<i class="fas fa-book-open"></i>
+				</span>
+				<h3 class="skill-title">Highly customizable</h3>
+				<p class="skill-text">
+					Customise according to your desires
+				</p>
+			</article>
+			<article class="skill">
+				<span class="skill-icon">
+					<i class="fas fa-running"></i>
+				</span>
+				<h3 class="skill-title">Fitness</h3>
+				<p class="skill-text">
+				   Embrace the health you deserve
+				</p>
+			</article>
+			<article class="skill">
+				<span class="skill-icon">
+					<i class="fas fa-shopping-cart"></i>
+				</span>
+				<h3 class="skill-title">Variety</h3>
+				<p class="skill-text">
+					Choose from 5000+ delicious recipies
+				</p>
+			</article>
+		</section>
 
-  <div class="team-section">
-    <div class="inner-width">
-      <h1>About Us</h1>
-      <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
-    </div>
-    <div class="inner-width">
-      <h1>Meet Our Team</h1>
-      <div class="pers">
-
-
-        <div class="pe">
-          <img src="/images/aboutus/akshit.png" alt="">
-          <div class="p-name">Akshit Malhotra</div>
-          <div class="p-des">Web Developer</div>
-          <div class="p-sm">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-
-        <div class="pe">
-          <img src="/images/aboutus/udita.png" alt="">
-          <div class="p-name">Kanav Chadha</div>
-          <div class="p-des">Web Developer</div>
-          <div class="p-sm">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-
-        <div class="pe">
-          <img src="/images/aboutus/sukeerat.png" alt="">
-          <div class="p-name">Ashish Bhatia</div>
-          <div class="p-des">Web Developer</div>
-          <div class="p-sm">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="pers">
-
-
-        <div class="pe">
-          <img src="/images/aboutus/sukeerat.png" alt="">
-          <div class="p-name">Sukeerat Kaur</div>
-          <div class="p-des">Web Developer</div>
-          <div class="p-sm">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-
-        <div class="pe">
-          <img src="/images/aboutus/udita.png" alt="">
-          <div class="p-name">Udita Mahajan</div>
-          <div class="p-des">Web Developer</div>
-          <div class="p-sm">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-
-      </div>
-
-
-    </div>
-  </div>
-
-
-  </body>
-</html>
+		<!-- our Team Section -->
+		<section class="ourTeam">
+			<h2 style="text-align: center;"> Meet our Team </h2>
+			<div class="member o1">
+				<div class="pic order-1">
+					<img src="/images/aboutus/akshit.png" alt="" class="img-fluid" />
+				</div>
+				<div class="info order-2">
+					<h4>AKSHIT MALHOTRA</h4>
+					<blockquote>Deployment and Backend</blockquote>
+					<p> 
+						<a href="https://github.com/akshitmalhotra" target="_blank"> <i class="fab fa-github"></i> </a>
+						<a href="https://www.linkedin.com/in/akshit-malhotra-4267b1188" target="_blank"> <i class="fab fa-linkedin"></i></a>
+						<a href="mailto:akshitmalhotra900@gmail.com"> <i class="fas fa-envelope"></i></a>
+					</p>
+					<p class="lead">
+						Akshit is a hardworking and dedicated person.
+						He handled the various tasks assigned to him efficiently.
+						He beleives in making the world a better place to live by using technology.
+					</p>
+					
+				</div>
+			</div>
+			<div class="member o2">
+				<div class="pic order-2">
+					<img src="/images/aboutus/ashish.png" alt="" class="img-fluid" />
+				</div>
+				<div class="info order-1">
+					<h4>ASHISH BHATIA</h4>
+					<blockquote>DB Designer and Frontend</blockquote>
+					<p> 
+						<a href="https://github.com/ashish031" target="_blank"> <i class="fab fa-github"></i> </a>
+						<a  href="https://www.linkedin.com/in/ashish-bhatia-95bb171ab/" target="_blank"> <i class="fab fa-linkedin"></i></a>
+						<a href="mailto:ab.ashishbhatia31@gmail.com"> <i class="fas fa-envelope"></i></a>
+					</p>
+					<p class="lead">
+						Ashish is a avid and creative individual.
+						He had a crystal clear vision towards the designs during the project.
+						He is always keen to learn new technologies and implementing them.
+					</p>
+				</div>
+			</div>
+			<div class="member o1">
+				<div class="pic order-1">
+					<img src="/images/aboutus/kanav.png" alt="" class="img-fluid" />
+				</div>
+				<div class="info order-2">
+					<h4>KANAV CHADHA</h4>
+					<blockquote>Frontend and Backend Developer</blockquote>
+					<p> 
+						<a href="https://github.com/kanavchadha" target="_blank"> <i class="fab fa-github"></i> </a>
+						<a href="https://www.linkedin.com/in/kanav-chadha-879a61171" target="_blank"> <i class="fab fa-linkedin"></i></a>
+						<a href="mailto:kanavchadha56@gmail.com"> <i class="fas fa-envelope"></i></a>
+					</p>
+					<p class="lead">
+						He is a passionate and ambitious full stack developer.
+						His desicive  nature and exceptional skills made the workflow smooth. 
+						He actively seek out new technologies and stay upto date on industry trends.
+					</p>
+				</div>
+			</div>
+			<div class="member o2">
+				<div class="pic order-2">
+					<img src="/images/aboutus/sukeerat.png" alt="" class="img-fluid" />
+				</div>
+				<div class="info order-1">
+					<h4>SUKEERAT KAUR</h4>
+					<blockquote>Frontend and Backend Developer</blockquote>
+					<p> 
+						<a href="https://github.com/sukeerat08" target="_blank"> <i class="fab fa-github"></i> </a>
+						<a href="https://www.linkedin.com/in/sukeerat-kaur-49852418b" target="_blank"> <i class="fab fa-linkedin"></i></a>
+						<a href="mailto:kirti.sagoo24@gmail.com"> <i class="fas fa-envelope"></i></a>
+					</p>
+					<p class="lead">
+						Sukeerat is a self-motivated and dedicated full stack developer.
+						Her competence brought a new perspective to the project.
+						She likes challenging herself and maintains consistency to make her dreams come true.
+					</p>
+				</div>
+			</div>
+			<div class="member o1">
+				<div class="pic order-1">
+					<img src="/images/aboutus/udita.png" alt="" class="img-fluid" />
+				</div>
+				<div class="info order-2">
+					<h4>UDITA MAHAJAN</h4>
+					<blockquote>DB designer and Frontend</blockquote>
+					<p> 
+						<a href="https://githu.com/uditamahajan24" target="_blank"><i class="fab fa-github" target="_blank"></i> </a>
+						<a href="https://www.linkedin.com/in/udita-mahajan-6077791a8" target="_blank"> <i class="fab fa-linkedin" target="_blank"></i></a>
+						<a href="mailto:uditamahajan24@gmail.com"> <i class="fas fa-envelope"></i></a>
+					</p>
+					<p class="lead">
+						Udita is a quick learner and a team player.
+						Her presence brought diversity in the project. 
+						She is a passoinate person who likes to explore herself and take up new opportunities.
+					</p>
+				</div>
+			</div>
+			<div class="member o2 thanks">
+				<div class="pic order-2">
+					<img src="https://cache.desktopnexus.com/thumbseg/1868/1868279-bigthumbnail.jpg">
+				</div>
+				<div class="info order-1">
+					<h3>Thank You</h3>
+					<blockquote> Made with Love and Lots of Passion<i class="fas fa-heart" style="color:#e16120;"></i></blockquote>
+					<em><h5> Visit Again! </h5></em>
+				</div>
+			</div>
+		</section>
+<%-include('./partials/footer')%>

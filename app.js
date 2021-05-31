@@ -51,18 +51,25 @@ app.use(passport.session());
 app.use(async function(req, res, next){
 	if(req.user){
 		res.locals.currUser = {name: req.user.fullName, id: req.user._id, email: req.user.email, favRecipes: req.user.favRecipes};
+	}else{
+		res.locals.currUser = '';
 	}
    	res.locals.error = req.flash("error");
 	res.locals.success = req.flash("success");
    	next();
 });
 
-
+app.get("/about",function(req,res){
+	res.render('about');
+});
 app.use(require('./routes/home'));
 app.use(require('./routes/user'));
 app.use(require('./routes/meals'));
 app.use(require('./routes/favorites'));
 
+app.get("*",function(req,res){
+	res.render('404');
+});
 
 app.listen(process.env.PORT || 8080, () => {
 	console.log("Server has started!") 
