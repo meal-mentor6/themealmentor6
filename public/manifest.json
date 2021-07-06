@@ -1,0 +1,38 @@
+{
+    "name": "MealMentor",
+    "short_name": "MealMentor",
+    "theme_color": "#26a697",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "Scope": "/",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "images/splashscreen.png",
+            "type": "image/png",
+            "sizes": "512x512" 
+        },
+        {
+            "src": "/images/apple-touch.png",
+            "type": "image/png",
+            "sizes": "192x192"
+          },
+          {
+            "src": "/images/icon.png",
+            "type": "image/png",
+            "sizes": "168x168"
+          },
+          {
+            "src": "/images/icon2.png",
+            "type": "image/png",
+            "sizes": "144x144"
+          },
+          {
+            "src": "/images/icon1.png",
+            "type": "image/png",
+            "sizes": "96x96"
+          }
+    ],
+    "splash_pages": null,
+    "gcm_sender_id": "114723486157"
+}

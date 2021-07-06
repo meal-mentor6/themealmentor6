@@ -35,6 +35,7 @@ app.use(sassMiddleware({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/views', express.static(path.join(__dirname, 'views')));
 
 app.set('view engine', 'ejs');
 
@@ -66,6 +67,8 @@ app.use(require('./routes/home'));
 app.use(require('./routes/user'));
 app.use(require('./routes/meals'));
 app.use(require('./routes/favorites'));
+app.use(require('./routes/mealPlanner'));
+app.use(require('./routes/notification'));
 
 app.get("*",function(req,res){
 	res.render('404');
