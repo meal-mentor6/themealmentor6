@@ -70,6 +70,10 @@ app.use(require('./routes/favorites'));
 app.use(require('./routes/mealPlanner'));
 app.use(require('./routes/notification'));
 
+app.get("/",function(req,res){
+	res.redirect("/home");
+});
+
 app.get("*",function(req,res){
 	res.render('404');
 });

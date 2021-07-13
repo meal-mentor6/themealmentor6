@@ -6,7 +6,7 @@ const {register, login, logout, getUserDashboard, editUserInfo, editUserInterest
 
 router.get("/signin",(req,res)=>{
 	if(req.user){
-		return res.redirect('/');
+		return res.redirect('/home');
 	}
 	res.render('login');
 })
@@ -23,9 +23,9 @@ router.get('/auth/google', passport.authenticate('google',{ scope: ['profile', '
 
 router.get('/auth/google/callback', passport.authenticate('google',{ failureRedirect:'/signin'}),
 	function (req, res){
-		console.log('hii i am there!');
+		console.log('signin with google!');
 		if(req.user.option===true){
-			return res.redirect("/");
+			return res.redirect("/home");
 		}else{
 			return res.redirect("/Signup-last-step");
 		}

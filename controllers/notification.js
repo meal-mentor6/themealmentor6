@@ -76,9 +76,10 @@ const getCurrDayTime = function () {
             currDayTime.push('saturday');
             break;
     }
-    const time = d.toLocaleTimeString().split(':');
+    const time = d.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' }).split(':');
     const hrs = parseInt(time[0]);
     const x = time[2].split(' ')[1];
+	console.log(hrs, x);
     if (hrs <= 11 && x == 'AM') {
         currDayTime.push('morning');
     } else if ((hrs == 12 || (hrs >= 1 && hrs < 3)) && x == 'PM') {

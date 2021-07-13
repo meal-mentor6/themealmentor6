@@ -1,6 +1,6 @@
 {
     "name": "MealMentor",
-    "short_name": "MealMentor",
+    "short_name": "mealmentor",
     "theme_color": "#26a697",
     "background_color": "#ffffff",
     "display": "standalone",
@@ -33,6 +33,5 @@
             "sizes": "96x96"
           }
     ],
-    "splash_pages": null,
-    "gcm_sender_id": "114723486157"
+    "splash_pages": "null"
 }

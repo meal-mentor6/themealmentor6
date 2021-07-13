@@ -3,7 +3,7 @@ const passport = require('passport');
 
 const register = async (req, res, next) => {
     try {
-		console.log(req.body);
+		// console.log(req.body);
 		const user = new User(req.body);
 		await user.save();
 		passport.authenticate("local", (err, user, info) => {
@@ -52,12 +52,11 @@ const login = (req, res, next) => {
 	
 			if(user.option===true){
 				req.flash('success','Login Successfully!');
-				return res.redirect("/");
+				return res.redirect("/home");
 			}else{
 				req.flash('success','Customize your recipes')
 				return res.redirect("/Signup-last-step");
 			}
-            
         });
     })(req, res, next);
 }
