@@ -92,6 +92,25 @@
 					</ul>
 				</div>
 				<div id="instructions" class="tabBody">
+					<div class='infobar'>
+						<span>Listen Instructions: </span>
+						<b>Rate: </b>
+						<b class='rate-label'>1</b>
+						<div class="range-field">
+							<input type="range" min="0.1" max="10" value='1' step='0.1' />
+						</div>
+						<div class='fixed-action-btn'>
+							<a class="btn-floating teal">
+								<i class="large material-icons">record_voice_over</i>
+							</a>
+							<ul>
+								<li><a id='cancel' class="btn-floating red"><i class="material-icons">cancel</i></a></li>
+								<li><a id='resume' class="btn-floating blue"><i class="material-icons">play_arrow</i></a></li>
+								<li><a id='pause' class="btn-floating yellow darken-1"><i class="material-icons">pause_circle_filled</i></a></li>
+								<li><a onclick="textToSpeech('<%= JSON.stringify(data.analyzedInstructions[0].steps) %>')" class="btn-floating green"><i class="material-icons">play_circle_filled</i></a></li>
+							</ul>
+						</div>
+					</div>
 					<ul class="collection">
 						<% if(!data.analyzedInstructions || data.analyzedInstructions.length===0 || data.analyzedInstructions[0].steps.length === 0) {%>
 						  <div class="chip">
@@ -273,15 +292,20 @@
 
 <script type="text/javascript">
 	const collaps = document.querySelectorAll('.collapsible');
+	const floatingActionBut = document.querySelectorAll('.fixed-action-btn');
 	document.addEventListener('DOMContentLoaded', function () {
 	    M.ScrollSpy.init(document.querySelectorAll('.scrollspy'));
 		M.Tabs.init(document.querySelectorAll('.tabs'));
 		M.Collapsible.init(collaps, { accordion: false });
+		M.FloatingActionButton.init(floatingActionBut, { direction: 'left', hoverEnabled: false });
 	});
+	
 	const summary = "<%= data.summary %>";
 	const id = "<%= data.id %>";
 </script>
+	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.1/chart.min.js"></script>-
 <script src="/js/detail.js"></script>	
-	
+<script src="/js/textToSpeech.js"></script>
+
 <%- include('./partials/footer.ejs') %>

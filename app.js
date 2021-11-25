@@ -17,6 +17,8 @@ const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_ACCOUNT}@cluster0.4fzaa
 
 const apiKey = process.env.API_KEY;
 
+app.enable('trust proxy');
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieSession({
@@ -61,7 +63,7 @@ app.use(async function(req, res, next){
 });
 
 app.get("/about",function(req,res){
-	res.render('about');
+	res.render('about', {title: 'About Us | Meal Mentor'});
 });
 app.use(require('./routes/home'));
 app.use(require('./routes/user'));
@@ -70,12 +72,12 @@ app.use(require('./routes/favorites'));
 app.use(require('./routes/mealPlanner'));
 app.use(require('./routes/notification'));
 
-app.get("/",function(req,res){
-	res.redirect("/home");
-});
+// app.get("/",function(req,res){
+// 	res.redirect("/home");
+// });
 
 app.get("*",function(req,res){
-	res.render('404');
+	res.render('404', {title: 'Page Not Found'});
 });
 
 app.listen(process.env.PORT || 8080, () => {

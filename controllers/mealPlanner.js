@@ -11,9 +11,9 @@ exports.createMealPlan = async (req, res) => {
             });
             await mealPlan.save();
             req.flash('success', 'Create Your Meal Plan here.');
-            return res.render('mealPlan', { mealPlan: mealPlan });
+            return res.render('mealPlan', { title: 'Your Meal Plan', mealPlan: mealPlan });
         }
-        return res.render('mealPlan', { mealPlan: mp._doc });
+        return res.render('mealPlan', { title: 'Your Meal Plan', mealPlan: mp._doc });
     } catch (err) {
         req.flash('error', err.message);
         return res.redirect('back');

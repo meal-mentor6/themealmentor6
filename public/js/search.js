@@ -37,6 +37,8 @@ const getPost = async () => {
 	console.log(data);
 	console.log(!data.recipes || data.recipes.length===0);
 	if(!data.recipes || data.recipes.length===0){
+		loading = false;
+		document.querySelector('.progress').style.visibility = "hidden";
 		M.toast({html: '<span><i class="material-icons">error</i> Sorry No Result Found. </span>', classes: 'rounded  teal darken-1'})
 		return;
 	}

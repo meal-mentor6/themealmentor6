@@ -1,5 +1,15 @@
 const User = require('../models/User');
 const passport = require('passport');
+const AccessToken=require('../models/AccessToken');
+const crypto=require('crypto');
+const {sendForgotMail,sendMail}=require('../helpers/sendMail');
+
+const getAuthPage = (req,res)=>{
+	if(req.user){
+		return res.redirect('/');
+	}
+	res.render('login', {title: 'Signin | Meal Mentor'});
+}
 
 const register = async (req, res, next) => {
     try {
@@ -26,7 +36,7 @@ const register = async (req, res, next) => {
 			});
 		})(req, res, next);
     } catch (err) {
-		console.log(err);
+		console.log(err.message);
 		req.flash('error', err.message);
 		res.redirect('back');
     }
@@ -52,7 +62,7 @@ const login = (req, res, next) => {
 	
 			if(user.option===true){
 				req.flash('success','Login Successfully!');
-				return res.redirect("/home");
+				return res.redirect("/");
 			}else{
 				req.flash('success','Customize your recipes')
 				return res.redirect("/Signup-last-step");
@@ -71,8 +81,96 @@ const getUserDashboard = async (req,res)=>{
 	const signinGoogle = user.google && !user.password ? true : false;
 	delete user._doc['password'];
 	delete user._doc['google'];
-	res.render('profile', {userData: user._doc, signinGoogle,user:user});
+	res.render('profile', {title: user.fullName+' Profile', userData: user._doc, signinGoogle,user:user});
 }
+
+const enterEmail = (req, res) => {
+    return res.render('forgot-password-mail',{
+        title: "Meal Mentor | Verify Email",
+		page: "email"
+    });
+}
+
+const forgotPassword = async (req, res) => {
+	try {
+		const email = req.body.email;
+		const existUser = await User.findOne({ email: email });
+		if (!existUser) {
+			return res.status(404).send({ message: 'User not found!' });
+		}
+		const buf = await crypto.randomBytes(20);
+		var token = buf.toString('hex');
+		let accesstoken = await AccessToken.create({
+			token: token,
+			user: existUser._id,
+			expiresIn: Date.now() + 10 * 60 * 60 * 1000,
+		});
+
+		sendForgotMail(email, accesstoken);
+		req.flash('success',"Check your Email,password reseting link has been sent to you");
+		return res.redirect('back');
+	} catch (err) {
+		req.flash('error',err.message);
+		return res.redirect('back');
+	}
+};
+
+const enterNewPassword=async(req,res)=>{
+	try{
+
+        let accessToken=await AccessToken.findOne({token:req.query.accessToken});
+    
+        if(accessToken){
+            return res.render('forgot-password-mail' , {
+                title : 'Meal Mentor | Reset Password',
+                accessToken : accessToken.token,
+				page:"password"
+            })
+        }
+        else{
+			req.flash("error","Please generate new token");
+            return res.redirect('/user/forgot-password');
+        }
+
+    }catch(err){
+        req.flash('error',err.message);
+		 return res.redirect('/user/forgot-password');
+    }
+}
+
+const resetPassword = async (req, res) => {
+	try {
+		console.log("Request body is",req.body,"token is",req.query);
+		const newPassword = req.body.newPassword;
+		const confirmPassword=req.body.confirmPassword;
+		const accessToken=  req.query.accessToken;
+		const tokenFound = await AccessToken.findOne({ token: accessToken, expiresIn: { $gt: Date.now() } });
+		const tf = await AccessToken.findOne({ token: accessToken });
+		
+		if (!tokenFound) {
+			console.log("TokenFound",tokenFound);
+			req.flash("error","Please generate new token");
+			return res.redirect('/user/forgot-password');
+		}
+		if(newPassword!==confirmPassword){
+			req.flash("error","Your password dont match with confirm Password");
+			return res.redirect('back');
+		}
+		const user = await User.findById(tokenFound.user);
+		if (!user) {
+			req.flash("error","Something went wrong");
+		}
+		user.password = newPassword;
+		if (tf) {
+			await tf.remove();
+		}
+		await user.save();
+		return res.redirect('/');
+	} catch (err) {
+		req.flash("error",err.message);
+		return res.redirect('/');
+	}
+};
 
 const editUserInfo = async (req,res)=>{
 	try{
@@ -136,16 +234,21 @@ const editUserInterest = async (req, res)=>{
 const slider=async function(req,res){
    
     return res.render('slider',{
-        title:"Slider",
+        title: "Meal Mentor | Personalize your choices",
     });
 }
 
 module.exports = {
+	getAuthPage,
 	login,
 	register,
 	logout,
 	getUserDashboard,
 	editUserInfo,
 	editUserInterest,
-	slider
+	slider,
+	forgotPassword,
+	resetPassword,
+	enterEmail,
+	enterNewPassword
 };

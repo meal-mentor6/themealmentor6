@@ -1,6 +1,8 @@
 const MealPlan = require('../models/MealPlan');
 const Subscriber = require('../models/Subscribers');
-const webpush = require('web-push')
+const {sendMail} = require('../helpers/sendMail');
+const webpush = require('web-push');
+
 webpush.setVapidDetails(
     'mailto:yourmealmentor@gmail.com',
     process.env.VAPID_PUBLIC_KEY,
@@ -17,6 +19,7 @@ exports.addSubscriber = async function (req, res) {
             user: req.user._id
         });
         await newSubscriber.save();
+		sendMail(req.user.email, 'Congrats! Successfully Subscribed', `<h3>Hi ${req.user.fullName},</h3> <p>You have Successfully Subscribed to Meal Mentor's exotic and healthy Meal Plan.</p> <p>Now you will recieve daily notifications according to you Meal Plan.</p>`)
         return res.status(200).send({ msg: 'SubscriptionID received' });
     } catch (err) {
         console.log(err.message);
@@ -27,8 +30,9 @@ exports.addSubscriber = async function (req, res) {
 exports.removeSubscriber = async function (req, res) {
     try {
         await Subscriber.deleteOne({ 'subscriber.endpoint': 'https://fcm.googleapis.com/fcm/send/' + req.params.id });
+    	sendMail(req.user.email, 'Oh No! Unsubscribed Successfully', `<h3>GoodBye ${req.user.fullName},</h3> <p>You have UnSubscribed to Meal Mentor's exotic and healthy Meal Plan.</p> <p>Send Us Feed back if you don't like anything, We will try to imporve our application. See you soon!</p>`)
         return res.status(200).send({ msg: 'SubscriptionID deleted' });
-    } catch (err) {
+} catch (err) {
         console.log(err.message);
         return res.status(400).send({ err: err.message });
     }
@@ -83,7 +87,7 @@ const getCurrDayTime = function () {
     if (hrs <= 11 && x == 'AM') {
         currDayTime.push('morning');
     } else if ((hrs == 12 || (hrs >= 1 && hrs < 3)) && x == 'PM') {
-        currDayTime.push('noon');
+        currDayTime.push('after noon');
     } else {
         currDayTime.push('evening');
     }

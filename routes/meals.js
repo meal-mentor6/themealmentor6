@@ -4,7 +4,7 @@ const { getDetail, viewAllRecipes, getPriceAnalysis, getNutrientsAnalysis, getTa
 const {isLoggedIn} = require('../middleware/auth');
 
 router.get("/search", isLoggedIn, (req,res)=>{
-	res.render('search');
+	res.render('search',{ title: 'Search Recipes | Menu,Food Items | Ingredients'});
 });
 
 router.get("/viewall", isLoggedIn, getviewPage);

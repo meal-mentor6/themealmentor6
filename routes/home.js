@@ -3,7 +3,7 @@ const router=express.Router();
 const homeController=require('../controllers/home_controller');
 const {isLoggedIn} = require('../middleware/auth');
 
-router.get('/home', isLoggedIn, homeController.home);
+router.get('/', isLoggedIn, homeController.home);
 router.post('/save-options', isLoggedIn, homeController.save);
 
 router.get('/getdessert', isLoggedIn, homeController.dessert);
