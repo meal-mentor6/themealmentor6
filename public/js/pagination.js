@@ -2,11 +2,15 @@ const container = document.querySelector(".page-content");
 
 let limit = 9;
 let pageCount = 0;
+let loading = true;
+// console.log(currOptions, random, favRecipes);
 
-console.log(currOptions, random, favRecipes);
+document.querySelector('.progress').style.visibility = "hidden";
 
 const getPost = async () => {
-    const res = await fetch('/recipes-pagination',{
+    loading = true;
+	document.querySelector('.progress').style.visibility = "visible";
+	const res = await fetch('/recipes-pagination',{
 		method: 'POST',
 		headers: {'Content-Type': 'application/json'},
 		body: JSON.stringify({
@@ -39,24 +43,56 @@ const getPost = async () => {
 
         container.insertAdjacentHTML("beforeend", htmlData);
     })
+	loading = false;
+	document.querySelector('.progress').style.visibility = "hidden";
 }
+
 getPost();
-const showData = ()=>{
-    setTimeout(()=>{
-        pageCount = pageCount+limit;
-        getPost();
-    },500);
+
+function getScrollXY() {
+	var scrOfX = 0,
+		scrOfY = 0;
+	if (typeof window.pageYOffset == 'number') {
+		//Netscape compliant
+		scrOfY = window.pageYOffset;
+		scrOfX = window.pageXOffset;
+	} else if (document.body && (document.body.scrollLeft || document.body.scrollTop)) {
+		//DOM compliant
+		scrOfY = document.body.scrollTop;
+		scrOfX = document.body.scrollLeft;
+	} else if (
+		document.documentElement &&
+		(document.documentElement.scrollLeft || document.documentElement.scrollTop)
+	) {
+		//IE6 standards compliant mode
+		scrOfY = document.documentElement.scrollTop;
+		scrOfX = document.documentElement.scrollLeft;
+	}
+	return [scrOfX, scrOfY];
 }
 
-window.addEventListener('scroll', ()=>{
-    const {scrollHeight, scrollTop , clientHeight} = document.documentElement;
+function getDocHeight() {
+	var D = document;
+	return Math.max(
+		D.body.scrollHeight,
+		D.documentElement.scrollHeight,
+		D.body.offsetHeight,
+		D.documentElement.offsetHeight,
+		D.body.clientHeight,
+		D.documentElement.clientHeight
+	);
+}
 
-    if((scrollTop + clientHeight)+1 > scrollHeight)
-    {
-        console.log("new page fired");
-        showData();
-    }
-})
+document.addEventListener('scroll', function (event) {
+	if (getDocHeight() - 1 <= getScrollXY()[1] + window.innerHeight) {
+		console.log("new page fired");
+		if(!loading) {
+			pageCount += limit;
+			getPost();
+		}
+	}
+});
+
 
 const favoriteHandler = (id, title, image)=>{
 	// console.log(id, title, image);

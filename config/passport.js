@@ -44,7 +44,7 @@ const googleStrategyConfig = new GoogleStrategy(
 	{
 		clientID: process.env.GOOGLE_AUTH_API,
 		clientSecret: process.env.GOOGLE_AUTH_SECRET,
-		callbackURL: '/auth/google/callback',
+		callbackURL: 'https://themealmentor.herokuapp.com/auth/google/callback',
 		passReqToCallback: true,
 	}, async (req, accessToken, refreshToken, profile, done) => {
 		// console.log('req.user', req.user);

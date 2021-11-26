@@ -1,12 +1,42 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Meal Mentor</title>
+		<title><%= title %></title>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Fitness Meal Menor, Tasty, Highly, customizable, variety of recipies and enjoy taste of eating healthy">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta name="theme-color" content="#26a697" />
+		<link rel="icon" href="/images/favicon.png">
+		<link rel="apple-touch-icon" href="/images/apple-touch.png" />
 		<!--Import Google Icon Font-->
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-		<!-- Compiled and minified CSS -->
-		<link type="text/css" rel="stylesheet" href="/css/index.css" >
-	
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet canonical" />
+		<link type="text/css" rel="stylesheet" href="/css/index.css" />
+		
+		<link rel="manifest" href="/manifest.json" />
+		<script> // Registering our Service worker
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('/sw.js').then(
+					(reg) => {
+						console.log('Service worker registered');
+					},
+					(err) => {
+						console.error('Service worker not registered', err);
+					}
+				);
+			} else {
+				console.log('Your Browser do not support PWA!');
+			}
+		</script>
+		<!-- <script>
+			document.addEventListener('DOMContentLoaded', init, false);
+			function init() {
+				if (navigator.onLine) {
+					console.log('online');
+				} else {
+					console.log('offline');
+				}
+			}
+		</script> -->
+	</head>
+</html>

@@ -8,7 +8,7 @@ const getCards=async function(){
 	}
 	const arr= res.myFavrecipes;
 	if(arr.length===0){
-		favcontainer.html(`<h5>You don't have any favoutites yet, Start adding them :)</h5>`);
+		document.querySelector('.inner-fav').insertAdjacentHTML('beforeend', `<h5 style="text-align:center">You don't have any favoutites yet, Start adding them :)</h5>`);
 	}else{
 			arr.forEach(item=>{
 			let card=makeCard(item);

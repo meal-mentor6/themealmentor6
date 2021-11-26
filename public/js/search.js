@@ -5,6 +5,8 @@ let limit = 9;
 let pageCount = 0;
 let searchQuery = '';
 let opts = [];
+let loading = false;
+document.querySelector('.progress').style.visibility = "hidden";
 
 const searchHandler = async ()=>{
 	const value = document.getElementById('autocomplete-input').value;
@@ -18,6 +20,8 @@ const searchHandler = async ()=>{
 
 const getPost = async () => {
 	if(!searchQuery) return;
+	loading = true;
+	document.querySelector('.progress').style.visibility = "visible";
 	console.log('trigger request', opts);
     const res = await fetch('/recipes-pagination',{
 		method: 'POST',
@@ -33,6 +37,8 @@ const getPost = async () => {
 	console.log(data);
 	console.log(!data.recipes || data.recipes.length===0);
 	if(!data.recipes || data.recipes.length===0){
+		loading = false;
+		document.querySelector('.progress').style.visibility = "hidden";
 		M.toast({html: '<span><i class="material-icons">error</i> Sorry No Result Found. </span>', classes: 'rounded  teal darken-1'})
 		return;
 	}
@@ -54,7 +60,55 @@ const getPost = async () => {
 
         container.insertAdjacentHTML("beforeend", htmlData);
     })
+	loading = false;
+	document.querySelector('.progress').style.visibility = "hidden";
 }
+
+getPost();
+
+function getScrollXY() {
+	var scrOfX = 0,
+		scrOfY = 0;
+	if (typeof window.pageYOffset == 'number') {
+		//Netscape compliant
+		scrOfY = window.pageYOffset;
+		scrOfX = window.pageXOffset;
+	} else if (document.body && (document.body.scrollLeft || document.body.scrollTop)) {
+		//DOM compliant
+		scrOfY = document.body.scrollTop;
+		scrOfX = document.body.scrollLeft;
+	} else if (
+		document.documentElement &&
+		(document.documentElement.scrollLeft || document.documentElement.scrollTop)
+	) {
+		//IE6 standards compliant mode
+		scrOfY = document.documentElement.scrollTop;
+		scrOfX = document.documentElement.scrollLeft;
+	}
+	return [scrOfX, scrOfY];
+}
+
+function getDocHeight() {
+	var D = document;
+	return Math.max(
+		D.body.scrollHeight,
+		D.documentElement.scrollHeight,
+		D.body.offsetHeight,
+		D.documentElement.offsetHeight,
+		D.body.clientHeight,
+		D.documentElement.clientHeight
+	);
+}
+
+document.addEventListener('scroll', function (event) {
+	if (getDocHeight() - 1 <= getScrollXY()[1] + window.innerHeight) {
+		console.log("new page fired");
+		if(!loading) {
+			pageCount += limit;
+			getPost();
+		}
+	}
+});
 
 const sf = document.querySelectorAll('.switch-filter');
 sf.forEach(f=>{
@@ -83,20 +137,6 @@ rf.forEach(f=>{
 			st.insertAdjacentHTML("beforeend", `<div class="chip" id="${e.target.name}"> ${e.target.name} - ${e.target.value} * </div>`);
 		}
 	})
-})
-
-const showData = ()=>{
-    pageCount = pageCount+limit;
-    getPost();
-}
-
-window.addEventListener('scroll', ()=>{
-    const {scrollHeight, scrollTop , clientHeight} = document.documentElement;
-
-    if((scrollTop + clientHeight)+1 > scrollHeight){
-        // console.log("new page fired");
-        showData();
-    }
 })
 
 acInput.addEventListener('input', function (e) {

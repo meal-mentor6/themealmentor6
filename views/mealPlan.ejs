@@ -1,0 +1,216 @@
+<%- include('./partials/head.ejs') %>
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magic/1.1.0/magic.min.css">
+  <link type="text/css" rel="stylesheet" href="/css/mealplan.css">
+  </head>
+
+  <body>
+    <%- include('./partials/navigation.ejs') %>
+      <div class="main">
+        <div class="browse">
+          <ul class="collapsible">
+            <li>
+              <div class="collapsible-header"><i class="material-icons">local_dining</i>Generate Meal Plan</div>
+              <div class="collapsible-body">
+                <select id="time">
+                  <option value="" disabled selected>Choose Time Frame</option>
+                  <option value="day"> Day </option>
+                  <option value="week"> Week </option>
+                </select>
+                <select id="diet">
+                  <option value="" disabled selected>Choose Diet</option>
+                  <option value="Gluten Free"> Gluten Free </option>
+                  <option value="Ketogenic">Ketogenic</option>
+                  <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
+                  <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
+                  <option value="Vegan">Vegan</option>
+                  <option value="Pescetarian">Pescetarian</option>
+                  <option value="Paleo">Paleo</option>
+                  <option value="Primal">Primal</option>
+                  <option value="Whole30">Whole30</option>
+                </select>
+                <input id="target-cal" type="number" min="100" max="10000" step="1" placeholder="target calories">
+                <div class="chips" id="ex-ing">
+                  <input placeholder="Exclude Ingredients">
+                </div>
+                <a class="btn-floating waves-effect waves-light teal" onclick="getMealPlan()"><i
+                    class="material-icons">check</i></a>
+              </div>
+            </li>
+          </ul>
+          <div class="reminder">
+            <a class="push-button waves-effect waves-light btn tooltipped" data-position="top" data-tooltip="Enable Notifications for your meal"> Set Reminder </a> <i class="push-icon material-icons">sync_disabled</i>
+            <!-- <button onclick="sendNotification()"> Send </button> -->
+          </div>
+        </div>
+        <div class="plan">
+          <table class="centered">
+            <thead>
+              <tr>
+                <th> Plan </th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thrusday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="firstcol">Morning</td>
+                <%mealplan={...mealPlan};%>
+                  <% Object.keys(mealplan).forEach(day=>{ if(mealplan[day]&&mealplan[day].schedule){%>
+                    <td>
+                      <div id="morning-<%=day%>">
+                        <%mealplan[day].schedule.morning.forEach(it=>{ %>
+                          <span id="m-<%=it._id%>" class="magictime vanishIn"> <img src="<%=it.image%>">
+                            <a href="<%=it.category=='recipe'?'/show/'+it.id:'#'%>" target='__blank'>
+                              <p> <%=it.title%> </p>
+                            </a>
+                            <i class="material-icons"
+                              onclick="removeFromSchedule('<%=it.id%>', '<%=day%>', 'morning', '<%=it._id%>')">remove_circle_outline</i>
+                            <input type="number" min="1" max="10000" step="1" placeholder="quantity">
+                          </span>
+                          <%})%>
+                      </div>
+                      <a class="modal-trigger" onclick="setBoxdata('morning-<%=day%>')" href="#searchModal"><i
+                          class="material-icons">add_circle_outline</i></a>
+                      <%}%>
+                    </td>
+                    <%})%>
+              </tr>
+              <tr>
+                <td class="firstcol">Noon</td>
+                <% Object.keys(mealplan).forEach(day=>{ if(mealplan[day]&&mealplan[day].schedule){ %>
+                  <td>
+                    <div id="noon-<%=day%>">
+                      <%mealplan[day].schedule.noon.forEach(it=>{%>
+                        <span id="m-<%=it._id%>" class="magictime vanishIn"> <img src="<%=it.image%>">
+                          <a href="<%=it.category=='recipe'?'/show/'+it.id:'#'%>" target='__blank'>
+                            <p> <%=it.title%> </p>
+                          </a>
+                          <i class="material-icons"
+                            onclick="removeFromSchedule('<%=it.id%>', '<%=day%>', 'noon', '<%=it._id%>')">remove_circle_outline</i>
+                          <input type="number" min="1" max="10000" step="1" placeholder="quantity">
+                        </span>
+                        <%}) %>
+                    </div>
+                    <a class="modal-trigger" onclick="setBoxdata('noon-<%=day%>')" href="#searchModal"><i
+                        class="material-icons">add_circle_outline</i></a>
+                    <%}%>
+                  </td>
+                  <%})%>
+              </tr>
+              <tr>
+                <td class="firstcol">Evening</td>
+                <% Object.keys(mealplan).forEach(day=>{ if(mealplan[day]&&mealplan[day].schedule){ %>
+                  <td>
+                    <div id="evening-<%=day%>">
+                      <%mealplan[day].schedule.evening.forEach(it=>{%>
+                        <span id="m-<%=it._id%>" class="magictime vanishIn"> <img src="<%=it.image%>">
+                          <a href="<%=it.category=='recipe'?'/show/'+it.id:'#'%>" target='__blank'>
+                            <p> <%=it.title%> </p>
+                          </a>
+                          <i class="material-icons"
+                            onclick="removeFromSchedule('<%=it.id%>', '<%=day%>', 'evening', '<%=it._id%>')">remove_circle_outline</i>
+                          <input type="number" min="1" max="10000" step="1" placeholder="quantity">
+                        </span>
+                        <%})%>
+                    </div>
+                    <a class="modal-trigger" onclick="setBoxdata('evening-<%=day%>')" href="#searchModal"><i
+                        class="material-icons">add_circle_outline</i></a>
+                    <%}%>
+                  </td>
+                  <%})%>
+              </tr>
+              <tr>
+                <td class="firstcol">Summary</td>
+                <% Object.keys(mealplan).forEach(day=>{ if(mealplan[day]&&mealplan[day].summary){%>
+                  <td>
+                    <div id="summary-<%=day%>" class="day-summary">
+                      <div><b>TotalProtein:</b>
+                        <output class="t-protein">
+                          <%= Number(mealplan[day].summary.totalProtein).toFixed(2) %>
+                        </output>
+                      </div>
+                      <div><b>totalFat:</b>
+                        <output class="t-fat">
+                          <%= Number(mealplan[day].summary.totalFat).toFixed(2) %>
+                        </output>
+                      </div>
+                      <div><b>TotalCalories:</b>
+                        <output class="t-calories">
+                          <%= Number(mealplan[day].summary.totalCalories).toFixed(2) %>
+                        </output>
+                      </div>
+                      <div><b>TotalCarbs: </b>
+                        <output class="t-carbs">
+                          <%= Number(mealplan[day].summary.totalCarbs).toFixed(2) %>
+                        </output>
+                      </div>
+                    </div>
+                    <%} })%>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="searchModal" class="modal modal-fixed-footer bottom-sheet">
+          <div class="modal-content">
+            <h4>Add You Meal</h4>
+            <div class="searchBox">
+              <div class="input-field">
+                <input id="searchbar" type="text">
+                <label for="searchbar">Type Recipe</label>
+              </div>
+              <a class="btn-floating waves-effect waves-light teal" onclick="searchMeal('searchbar')"><i
+                  class="material-icons">search</i></a>
+            </div>
+            <div class="search-results">
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="input-field">
+              <select id="meal-type">
+                <option value="" disabled selected>Choose Meal Type</option>
+                <option value="recipes/complexSearch">Add Recipe</option>
+                <option value="food/ingredients/search">Add Food Item</option>
+                <option value="food/menuItems/search">Add Menu Item</option>
+                <!-- <option value="food/products/search">Add Grocery Product</option> -->
+              </select>
+            </div>
+            <a href="#!" class="modal-close waves-effect waves-orange btn-flat">close</a>
+          </div>
+        </div>
+
+        <div id="mealPlan-modal" class="modal modal-fixed-footer">
+          <div class="modal-content">
+            <h4>Meal Plan</h4>
+            <div class="mealplan-results">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-red btn-flat">Close</a>
+            <a onclick="setMyMealPlan()" class="waves-effect waves-green btn-flat tooltipped" data-position="top"
+              data-tooltip="This will override all your previous data(if any) for selected time frame!">Save</a>
+          </div>
+        </div>
+
+      </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          M.Collapsible.init(document.querySelectorAll('.collapsible'));
+          M.Modal.init(document.querySelectorAll('.modal'));
+          M.FormSelect.init(document.querySelectorAll('select'));
+          M.Chips.init(document.querySelectorAll('.chips'));
+		      M.Tooltip.init(document.querySelectorAll('.tooltipped'));
+        });
+      </script>
+      <script src="/js/mealPlanner.js"></script>
+      <script src="/js/pushnotifications.js"></script>
+
+      <%- include('./partials/footer.ejs') %>

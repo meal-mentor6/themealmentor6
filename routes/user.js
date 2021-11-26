@@ -2,14 +2,9 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const { isLoggedIn } = require("../middleware/auth");
-const {register, login, logout, getUserDashboard, editUserInfo, editUserInterest,slider} = require('../controllers/user');
+const {getAuthPage, register, login, logout, getUserDashboard, editUserInfo, editUserInterest,slider,forgotPassword,resetPassword,enterEmail,enterNewPassword} = require('../controllers/user');
 
-router.get("/signin",(req,res)=>{
-	if(req.user){
-		return res.redirect('/');
-	}
-	res.render('login');
-})
+router.get("/signin", getAuthPage)
 
 router.get('/Signup-last-step',slider);
 
@@ -23,7 +18,7 @@ router.get('/auth/google', passport.authenticate('google',{ scope: ['profile', '
 
 router.get('/auth/google/callback', passport.authenticate('google',{ failureRedirect:'/signin'}),
 	function (req, res){
-		console.log('hii i am there!');
+		console.log('signin with google!');
 		if(req.user.option===true){
 			return res.redirect("/");
 		}else{
@@ -37,5 +32,11 @@ router.get('/user/me', isLoggedIn, getUserDashboard);
 router.post('/user/edituserinfo', isLoggedIn, editUserInfo);
 
 router.post('/user/edituserinterest', isLoggedIn, editUserInterest);
+
+router.get('/user/forgot-password',enterEmail);
+router.post('/auth/forgot-password',forgotPassword);
+router.get('/auth/fill-new-password',enterNewPassword);
+router.post('/auth/reset-password',resetPassword);
+
 
 module.exports = router;

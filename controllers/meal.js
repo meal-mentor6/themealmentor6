@@ -3,8 +3,6 @@ const {getApiKey} = require('../helpers/keys');
 
 const getDetail = async function(req, res){
 	const mealid = req.params.id;
-	console.log(mealid);
-	
 	const res1 = await fetch(`https://api.spoonacular.com/recipes/${mealid}/similar?apiKey=${getApiKey()}&number=8`);
 	const resData1 = await res1.json();
 	let related = resData1.map((r) => ({ id: r.id, title: r.title}));
@@ -13,6 +11,7 @@ const getDetail = async function(req, res){
 	.then(res=> res.json())
 	.then((resData)=>{
 		 return res.render('detail',{
+			 title: 'Recipe - ' + resData.title,
 			 data: resData,
 			 arr:related
 		 });
@@ -101,6 +100,7 @@ const getviewPage = function(req,res){
 	}
 	// console.log("Options of  meals are",options);
 	return res.render('viewall',{
+		title: 'View All ' + req.query.type,
 		options: options,
 		random: custom
 	});

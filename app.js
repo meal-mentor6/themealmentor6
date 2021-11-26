@@ -9,13 +9,15 @@ const passport = require('passport');
 const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const flash = require("connect-flash");
-// const sassMiddleware=require('node-sass-middleware');
+const sassMiddleware=require('node-sass-middleware');
 
 require('./config/passport');
 
 const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_ACCOUNT}@cluster0.4fzaa.mongodb.net/mealmentor?retryWrites=true&w=majority`;
 
 const apiKey = process.env.API_KEY;
+
+app.enable('trust proxy');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -26,15 +28,16 @@ app.use(cookieSession({
 app.use(cookieParser());
 app.use(flash());
 
-// app.use(sassMiddleware({
-//     src: path.join(__dirname,'public','sass'),
-//     dest: path.join(__dirname,'public', 'css'),
-//     debug: true,
-//     outputStyle: 'extended',
-//     prefix: '/css'
-// }));
+app.use(sassMiddleware({
+    src: path.join(__dirname,'public','sass'),
+    dest: path.join(__dirname,'public', 'css'),
+    debug: true,
+    outputStyle: 'extended',
+    prefix: '/css'
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/views', express.static(path.join(__dirname, 'views')));
 
 app.set('view engine', 'ejs');
 
@@ -51,18 +54,31 @@ app.use(passport.session());
 app.use(async function(req, res, next){
 	if(req.user){
 		res.locals.currUser = {name: req.user.fullName, id: req.user._id, email: req.user.email, favRecipes: req.user.favRecipes};
+	}else{
+		res.locals.currUser = '';
 	}
    	res.locals.error = req.flash("error");
 	res.locals.success = req.flash("success");
    	next();
 });
 
-
+app.get("/about",function(req,res){
+	res.render('about', {title: 'About Us | Meal Mentor'});
+});
 app.use(require('./routes/home'));
 app.use(require('./routes/user'));
 app.use(require('./routes/meals'));
 app.use(require('./routes/favorites'));
+app.use(require('./routes/mealPlanner'));
+app.use(require('./routes/notification'));
 
+// app.get("/",function(req,res){
+// 	res.redirect("/home");
+// });
+
+app.get("*",function(req,res){
+	res.render('404', {title: 'Page Not Found'});
+});
 
 app.listen(process.env.PORT || 8080, () => {
 	console.log("Server has started!") 

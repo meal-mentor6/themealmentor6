@@ -1,0 +1,240 @@
+.main{
+    margin-top: 20px;
+    padding: 10px;
+    display: flex;
+	width: 100%;
+    justify-content: space-between;
+    /* align-items: center; */
+    flex-wrap: wrap;
+    position: relative;
+}
+.searchBox {
+	display: flex;
+	align-items: center;
+    justify-content: space-between;
+	flex-wrap: wrap;
+}
+.input-field{
+    flex: 1;
+    font-size: 14px;
+}
+.main .browse{
+    min-width: 250px;
+    flex: 0.32;
+    margin-right: 10px;
+}
+.collapsible-header{
+    font-weight: bold;
+}
+.collapsible-body{
+    padding: 10px !important;
+    max-height: 100%;
+}
+table > td::-webkit-scrollbar{
+    width: 5px !important;
+}
+.main .plan{
+    flex: 0.68;
+    overflow-x: auto !important;
+    height: 100%;
+    width: 100%;
+	min-width: 65%;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+    padding: 5px;
+    border-radius: 5px;
+}
+.plan .firstcol{
+    font-weight: bold;
+}
+td,th{
+    border-left: 1px solid lightgrey !important; 
+    border-right: 1px solid lightgrey !important;
+}
+th{
+    border-top: 1px solid lightgrey !important;
+}
+.plan td{
+    height: 120px;    
+}
+.plan td div{
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 160px;
+    max-height: 100px !important;
+    overflow-y: auto;
+}
+.plan td i{
+    cursor: pointer;
+    transition: 0.2s;
+}
+.plan td a{
+    color: teal;
+}
+.plan td i:hover{
+    transform: scale(1.1) rotate(180deg);
+}
+.plan td span{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    height: 80px;
+    margin: 3px;
+    transition: 0.3s !important;
+}
+td span img, .mealplan-results td div img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+td span p, .mealplan-results td div p{
+    color: white;
+    text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    font-size: 14px;
+    margin: 0 !important;
+    width: 100%;
+    text-overflow: ellipsis;
+    visibility: hidden;
+    backdrop-filter: blur(5px);
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+td span:hover p, .mealplan-results td div:hover p{
+    visibility: visible;
+}
+td span i{
+    color: #e41411;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.25);
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    visibility: hidden;
+}
+td span input{
+    position: absolute;
+    top: 1px;
+    width: 45% !important;
+    outline: none;
+    color:  teal;
+    border-radius: 5px;
+    font-size: 12px !important;
+    margin: 0 !important;
+    padding: 2px 5px !important;
+    height: auto !important;
+    left: -100%;
+}
+td span input::placeholder{
+    color:  white;
+    text-shadow: 1px 2px 3px rgba(0,0,0,0.3);
+}
+td span:hover i{
+    visibility: visible;
+}
+td span:hover input{
+    left: 1px;
+}
+.search-results, .mealplan-results, .products-results, .menu-results{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+#mealPlan-modal.modal.modal-fixed-footer{
+    max-height: 100%;
+    height: 90%;
+    width: 90%;
+    top: 5% !important;
+}
+#mealPlan-modal.modal .modal-content{
+    padding: 0 !important;
+    height: 100%;
+    padding-bottom: 55px !important;
+    overflow-x: auto;
+}
+#mealPlan-modal.modal .modal-content h4{
+    padding-top: 10px;
+    text-align: center;
+}
+.search-results{
+    padding-bottom: 35px;
+}
+.res-card{
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    transition: 0.25s;
+    overflow: hidden;
+    height: 180px;
+    margin: 10px;
+    min-width: 100px;
+    max-width: 200px;
+    position: relative;
+}
+.res-card img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.res-card span{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    color: whitesmoke;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    border-top: 1px solid lightgrey;
+    width: 100%;
+    text-overflow: ellipsis;
+    backdrop-filter: blur(5px);
+}
+.res-card i{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #f35202;    
+    box-shadow: 0 3px 6px rgba(253, 112, 41, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+}
+#searchModal{
+    max-height: 68vh !important;
+}
+#searchModal .modal-content{
+    height: 100%;
+}
+#searchModal .modal-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.mealplan-results td div{
+    width: 200px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+.reminder{
+    margin: 20px 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.reminder .push-icon{
+    font-size: 2.3rem;
+    color: teal;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+.mealplan-results td div.day-summary, .mealplan-results td div.day-summary div{
+    height: 100%;
+}
+@media (max-width: 790px){
+    .main .browse{
+        margin-right: 0px;
+		flex: 1;
+    }
+	.main .plan{
+        flex: 1;
+    }
+}

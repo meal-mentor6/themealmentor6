@@ -133,6 +133,30 @@
 .bottom-sec .right {
   flex: 0.6; }
 
+#instructions .infobar {
+  position: relative;
+  background-color: #dff2f2;
+  display: flex;
+  align-items: center;
+  padding: 10px; }
+
+#instructions .infobar span {
+  margin: 0 10px;
+  margin-right: 20px;
+  font-size: 1.6rem;
+  font-weight: bold; }
+
+#instructions .infobar b {
+  margin-right: 5px; }
+
+#instructions .infobar .fixed-action-btn {
+  position: absolute !important;
+  right: 10px;
+  top: 5px; }
+
+#instructions .collection {
+  margin-top: 0 !important; }
+
 .collection-item {
   font-size: 1.1rem; }
 

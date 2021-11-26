@@ -1,5 +1,6 @@
-const User=require('../models/User');
 const fetch=require('node-fetch');
+const User=require('../models/User');
+const MealPlan = require('../models/MealPlan');
 const {getApiKey} = require('../helpers/keys');
 
 module.exports.home=async function(req,res){
@@ -56,7 +57,7 @@ module.exports.home=async function(req,res){
     }
 
     return res.render('home',{
-        title: "Home",
+        title: "Meal Mentor - Recipes",
         arr: arr,
 		c:user.favCusine,
 		d:user.diet,
@@ -68,7 +69,7 @@ module.exports.home=async function(req,res){
 	}catch(err){
 		console.log(err.message);
 		return res.render('home',{
-			title: "Home",
+			title: "Meal Mentor - Recipes",
 			arr: [],
 			check:a
 		});
@@ -76,69 +77,73 @@ module.exports.home=async function(req,res){
 }
 
 module.exports.save = async function(req,res){
+	try{
+		let user=await User.findById(req.user._id);
 
-    let user=await User.findById(req.user._id);
-	
-    if (Object.keys(req.body).length === 0) {
-        console.log("No options are selected");
-        user.favCusine=null;
-        user.foodAllergies=null;
-        user.diet=null;
-        user.type=null;
-        user.notIngredients=null;
-        await user.save();
-        console.log("User is",user);
-    }
-    else{
-
-        if(req.body.cuisine!=undefined){
-            user.favCusine=req.body.cuisine;
-        }else{
-			 user.favCusine=null;
-		}
-
-        if(req.body.allergies!=undefined){
-            user.foodAllergies=req.body.allergies;
-        }else{
+		if (Object.keys(req.body).length === 0) {
+			console.log("No options are selected");
+			user.favCusine=null;
 			user.foodAllergies=null;
-		}
-
-        if(req.body.diet!=undefined){
-            user.diet=req.body.diet;
-        }else{
 			user.diet=null;
-		}
-        
-        if(req.body.type!=undefined){
-            user.type=req.body.type;
-        }else{
-			 user.type=null;
-		}
-        
-	
-        var noin="";
-        
-        for(let item in req.body){
-            if(item=="ex1" || item=="ex2" ||item=="ex3" || item=="ex4" || item=="ex5" || item=="ex6"){
-                noin+=req.body[item]+",";
-            }
-        }
-        if(noin.length>0){
-            noin=noin.slice(0,-1);
-        }
-
-        if(noin!=""){
-            user.notIngredients = noin;
-        }else{
+			user.type=null;
 			user.notIngredients=null;
+			await user.save();
+			console.log("User is",user);
 		}
-		
-		user.option=true;
-        await user.save();
-        // console.log("user is",user);           
-    }
+		else{
 
-    res.redirect('/'); 
+			if(req.body.cuisine!=undefined){
+				user.favCusine=req.body.cuisine;
+			}else{
+				 user.favCusine=null;
+			}
+
+			if(req.body.allergies!=undefined){
+				user.foodAllergies=req.body.allergies;
+			}else{
+				user.foodAllergies=null;
+			}
+
+			if(req.body.diet!=undefined){
+				user.diet=req.body.diet;
+			}else{
+				user.diet=null;
+			}
+
+			if(req.body.type!=undefined){
+				user.type=req.body.type;
+			}else{
+				 user.type=null;
+			}
+
+			var noin="";
+
+			for(let item in req.body){
+				if(item=="ex1" || item=="ex2" ||item=="ex3" || item=="ex4" || item=="ex5" || item=="ex6"){
+					noin+=req.body[item]+",";
+				}
+			}
+			if(noin.length>0){
+				noin=noin.slice(0,-1);
+			}
+
+			if(noin!=""){
+				user.notIngredients = noin;
+			}else{
+				user.notIngredients=null;
+			}
+
+			user.option=true;
+			await user.save();
+			const mealPlan = new MealPlan({ user: req.user._id });
+			await mealPlan.save();         
+		}
+    	res.redirect('/'); 
+	} catch(err){
+		console.log(err.message);
+		req.flash('error', err.message);
+		res.redirect('back');
+	}
 }
 
 

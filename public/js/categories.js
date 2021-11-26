@@ -8,7 +8,7 @@ const getData = async function(){
 	
     const main_course=await fetch('/getmaincourse');
 	const resData2=await main_course.json();
-    console.log("main array is",resData2);
+    // console.log("main array is",resData2);
 	const a2=resData2.arr.map((r) => ({ title: r.title, image: r.image, id: r.id}));
 
     a2.forEach(c=>{
@@ -18,7 +18,7 @@ const getData = async function(){
 	
 	const dessert=await fetch('/getdessert');
 	const resData1=await dessert.json();
-    console.log("dessert is",resData1);
+    // console.log("dessert is",resData1);
 	const a1=resData1.arr.map((r) => ({ title: r.title, image: r.image, id: r.id }));
 	
 	a1.forEach(c=>{

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet canonical" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <nav class="teal lighten-1">
@@ -9,9 +9,11 @@
 		</a>
 		<ul class="right hide-on-med-and-down">
 			<li><a href="/search"> <i class="material-icons">search</i></a></li>
+			<li><a href="/about"> About us</a></li>
 			<li>
 				<a class="dropdown-trigger1" href="#!" style="outline: none;" data-target="dropdown1">Categories<i class="material-icons right">arrow_drop_down</i></a>
 			</li>
+			<li><a href="/mymealplan">Meal Plan</a></li>
 			<li><a href="/user/me"><%= currUser.name %></a></li>
 			<li><a href="/logout">logout</a></li>
 		</ul>
@@ -30,11 +32,12 @@
 	 <li>
 		 <div class="user-view">
 		  <div class="background"> </div>
-		  <a href="#user"><img class="circle" src="/images/extra/Logo.png"></a>
+		  <a href="/"><img class="circle" src="/images/extra/Logo.png"></a>
 		  <b><span class=" name">Meal Mentor</span></b>
 		  <b><span class=" email">yourmealmentor@gmail.com</span></b>
 		</div>
 	</li>
+	<li><a href="/about"> About us</a></li>
 	<li><a href="/search"><i class="material-icons">search</i> Search </a></li>
 	<li class="no-padding">
 		<ul class="collapsible collapsible-accordion">
@@ -52,6 +55,7 @@
 			</li>
 		</ul>
 	</li>
+	<li><a href="/mymealplan">Meal Plan</a></li>
 	<li><a href="/user/me"><%= currUser.name %></a></li>
 	<li><a href="/logout">logout</a></li>
 </ul>
